@@ -1,14 +1,22 @@
-function App() {
+import Footer from "./Components/Footer";
+import Header from "./Components/Header";
+import NotificationToast from "./Components/Notifications/NotificationToast";
+import CommunitySection from "./Components/Community/CommunitySection";
+import OpportunitiesSection from "./Components/Opportunities/OpportunitiesSection";
+import { useNotificationQueue } from "./hooks/useNotificationQueue";
+
+export default function App() {
+  const { current, notify, dismiss } = useNotificationQueue();
+
   return (
-    <div style={{ padding: 40, fontFamily: "sans-serif" }}>
-      <h1>B4F Hub — starter project</h1>
-      <p>
-        Your local API is already running at <code>http://localhost:3001</code> (proxied through{" "}
-        <code>/api/...</code> in dev). Start building here — see{" "}
-        <code>B4F_HUB_TAKE_HOME_REQUIREMENTS.pdf</code> for what to build.
-      </p>
+    <div className="app-root">
+      <Header />
+      <main className="app-shell">
+        <CommunitySection notify={notify} />
+        <OpportunitiesSection notify={notify} />
+      </main>
+      <Footer />
+      <NotificationToast notification={current} onDismiss={dismiss} />
     </div>
   );
 }
-
-export default App;
