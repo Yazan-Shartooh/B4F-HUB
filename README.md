@@ -35,14 +35,14 @@ npm run dev:server
 
 npm run dev:client
 ```
-## Available scripts
-Command	                Description
-npm run dev	            Start the client and API together
-npm run dev:client	    Start the Vite development server
-npm run dev:server	    Start the Express API
-npm run build	          Type-check and build the production client
-npm run lint	          Run ESLint
-npm run preview	        Preview the production build
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Start the client and API together |
+| `npm run dev:client` | Start the Vite development server |
+| `npm run dev:server` | Start the Express API |
+| `npm run build` | Type-check and build the production client |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Preview the production build |
 
 ## Data behavior
 The API starts with deterministic seed data. New posts, likes, and application updates are held in server memory and reset when the API restarts. Saved opportunities are held in client-side state and reset when the page is refreshed
