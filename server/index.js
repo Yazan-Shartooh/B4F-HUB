@@ -12,13 +12,15 @@
 import express from "express";
 import { initialPosts, initialOpportunities } from "./data.js";
 
-const PORT = 3001;
+const PORT = 3003;
 
 const app = express();
 app.use(express.json());
 
 let posts = initialPosts.map((post) => ({ ...post }));
-let opportunities = initialOpportunities.map((opportunity) => ({ ...opportunity }));
+let opportunities = initialOpportunities.map((opportunity) => ({
+  ...opportunity,
+}));
 let nextPostId = Math.max(...posts.map((post) => post.id)) + 1;
 
 const ALLOWED_CATEGORIES = ["announcement", "event", "community", "resource"];
@@ -44,21 +46,23 @@ app.post("/api/posts", (req, res) => {
   const { content, category } = req.body ?? {};
 
   if (typeof content !== "string") {
-    return res.status(400).json({ error: "content is required and must be a string." });
+    return res
+      .status(400)
+      .json({ error: "content is required and must be a string." });
   }
 
   const trimmedContent = content.trim();
 
   if (trimmedContent.length < MIN_CONTENT_LENGTH) {
-    return res
-      .status(400)
-      .json({ error: `content must be at least ${MIN_CONTENT_LENGTH} characters.` });
+    return res.status(400).json({
+      error: `content must be at least ${MIN_CONTENT_LENGTH} characters.`,
+    });
   }
 
   if (trimmedContent.length > MAX_CONTENT_LENGTH) {
-    return res
-      .status(400)
-      .json({ error: `content must be ${MAX_CONTENT_LENGTH} characters or fewer.` });
+    return res.status(400).json({
+      error: `content must be ${MAX_CONTENT_LENGTH} characters or fewer.`,
+    });
   }
 
   if (typeof category !== "string" || !ALLOWED_CATEGORIES.includes(category)) {
@@ -89,7 +93,9 @@ app.patch("/api/posts/:id", (req, res) => {
   const { liked } = req.body ?? {};
 
   if (typeof liked !== "boolean") {
-    return res.status(400).json({ error: "liked is required and must be a boolean." });
+    return res
+      .status(400)
+      .json({ error: "liked is required and must be a boolean." });
   }
 
   const post = posts.find((candidate) => candidate.id === id);
@@ -121,17 +127,23 @@ app.patch("/api/opportunities/:id", (req, res) => {
   const { applied } = req.body ?? {};
 
   if (applied !== true) {
-    return res.status(400).json({ error: "applied is required and must be true." });
+    return res
+      .status(400)
+      .json({ error: "applied is required and must be true." });
   }
 
   const opportunity = opportunities.find((candidate) => candidate.id === id);
 
   if (!opportunity) {
-    return res.status(404).json({ error: `No opportunity found with id ${id}.` });
+    return res
+      .status(404)
+      .json({ error: `No opportunity found with id ${id}.` });
   }
 
   if (opportunity.applied) {
-    return res.status(409).json({ error: "You have already applied to this opportunity." });
+    return res
+      .status(409)
+      .json({ error: "You have already applied to this opportunity." });
   }
 
   opportunity.applied = true;

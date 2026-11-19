@@ -23,7 +23,11 @@ export default function CommunityFilters({
 }: CommunityFiltersProps) {
   return (
     <div className="filters-bar">
-      <div className="filter-chips" role="radiogroup" aria-label="Filter by category">
+      <div
+        className="filter-chips"
+        role="radiogroup"
+        aria-label="Filter by category"
+      >
         {CATEGORY_OPTIONS.map((option) => (
           <button
             key={option.value}
